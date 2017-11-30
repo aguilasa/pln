@@ -1,8 +1,19 @@
-<!doctype html>
+
+class HtmlGenerator:
+    def __init__(self):
+        self._data = []
+
+    def set_data(self, data):
+        self._data = data
+
+    def write(self):
+        p = open("index.html", "w")
+        p.write("""
+        <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Hello, world!</title>
+    <title>Sumarizacao</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,12 +23,20 @@
         crossorigin="anonymous">
 </head>
 
-<body>
-    <div class="container">
-        <h1>Hello, world!</h1>
-    </div>
-
-
+<body>""")
+        p.write("""
+        <div class="container"><div class="col-lg-12">
+        """)
+        for d in self._data:
+            p.write("<h4>")
+            p.write(d[0])
+            p.write("</h4>")
+            for par in d[1]:
+                p.write("<p>")
+                p.write(par)
+                p.write("<p>")
+        p.write("""</div>
+        </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -28,4 +47,5 @@
         crossorigin="anonymous"></script>
 </body>
 
-</html>
+</html>""")
+        p.close()

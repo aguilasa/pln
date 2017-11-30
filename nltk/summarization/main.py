@@ -1,6 +1,8 @@
 import urllib2
 from bs4 import BeautifulSoup
 from summarizer import FrequencySummarizer
+from html import HtmlGenerator
+import webbrowser
 
 
 def get_only_text(url):
@@ -18,11 +20,21 @@ feed_xml = urllib2.urlopen('http://feeds.bbci.co.uk/news/rss.xml').read()
 feed = BeautifulSoup(feed_xml.decode('utf8'), 'lxml')
 to_summarize = map(lambda p: p.text, feed.find_all('guid'))
 
-
+h = HtmlGenerator()
+l = []
 fs = FrequencySummarizer()
-for article_url in to_summarize[:5]:
+for article_url in to_summarize[:4]:
+    d = []
     title, text = get_only_text(article_url)
     print '----------------------------------'
     print title
+    t = []
     for s in fs.summarize(text, 2):
         print '*', s
+        t.append(s)
+    d.append(title)
+    d.append(t)
+    l.append(d)
+h.set_data(l)
+h.write()
+webbrowser.open("index.html")
